@@ -97,6 +97,7 @@ extension PopupTopStackView {
     var stackLimit: Int { globalConfig.top.stackLimit }
     var stackScaleFactor: CGFloat { globalConfig.top.stackScaleFactor }
     var stackOffsetValue: CGFloat { globalConfig.top.stackOffset }
+    var stackCornerRadius: CGFloat { globalConfig.top.stackCornerRadius }
     var stackCornerRadiusMultiplier: CGFloat { globalConfig.top.stackCornerRadiusMultiplier }
 
     var translationProgress: CGFloat { abs(gestureTranslation) / height }

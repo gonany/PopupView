@@ -22,6 +22,7 @@ protocol PopupStack: View {
 
     var stackLimit: Int { get }
     var stackScaleFactor: CGFloat { get }
+    var stackCornerRadius: CGFloat { get }
     var stackCornerRadiusMultiplier: CGFloat { get }
     var stackOffsetValue: CGFloat { get }
 
@@ -34,6 +35,7 @@ extension PopupStack {
 
     var stackLimit: Int { 1 }
     var stackScaleFactor: CGFloat { 1 }
+    var stackCornerRadius: CGFloat { cornerRadius }
     var stackCornerRadiusMultiplier: CGFloat { 0 }
     var stackOffsetValue: CGFloat { 0 }
 }
@@ -50,8 +52,12 @@ extension PopupStack {
 // MARK: - Corner Radius
 extension PopupStack {
     func getCornerRadius(_ item: AnyPopup<Config>) -> CGFloat {
-        if isLast(item) { return cornerRadius }
-        if translationProgress.isZero || translationProgress.isNaN || !isNextToLast(item) { return stackedCornerRadius }
+        if isLast(item) {
+            return cornerRadius
+        }
+        if translationProgress.isZero || translationProgress.isNaN || !isNextToLast(item) {
+            return stackedCornerRadius
+        }
 
         let difference = cornerRadius - stackedCornerRadius
         let differenceProgress = difference * translationProgress
@@ -59,7 +65,9 @@ extension PopupStack {
     }
 }
 private extension PopupStack {
-    var stackedCornerRadius: CGFloat { cornerRadius * stackCornerRadiusMultiplier }
+    var stackedCornerRadius: CGFloat {
+        stackCornerRadius * stackCornerRadiusMultiplier
+    }
 }
 
 // MARK: - Scale
@@ -88,7 +96,7 @@ private extension PopupStack {
     }
 }
 private extension PopupStack {
-    var stackOverlayColour: Color { .black }
+    var stackOverlayColour: Color { .clear }
     var stackOverlayFactor: CGFloat { 1 / stackLimit.doubleValue * 0.5 }
 }
 

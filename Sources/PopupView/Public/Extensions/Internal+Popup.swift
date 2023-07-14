@@ -39,7 +39,7 @@ internal extension Popup {
     }
     
     func timerComplete(Timer: Timer?) {
-        TimerManager.shared.destroyTimer(id: self.id)
+        TimerManager.shared.destroyTimer(id: id)
         self.dismiss()
     }
 }

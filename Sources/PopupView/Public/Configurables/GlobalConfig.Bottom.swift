@@ -28,6 +28,9 @@ public extension GlobalConfig.Bottom {
 // MARK: - Stack Customisation
 public extension GlobalConfig.Bottom {
     /// Corner radius multiplier for popups on the stack.
+    func stackCornerRadius(_ value: CGFloat) -> Self { changing(path: \.stackCornerRadius, to: value) }
+    
+    /// Corner radius multiplier for popups on the stack.
     /// For example **value** = 0.5 means that the stacked popups will be have a corner radius equal to activeCornerRadius * 0.5.
     func stackCornerRadiusMultiplier(_ value: CGFloat) -> Self { changing(path: \.stackCornerRadiusMultiplier, to: value) }
 
@@ -62,7 +65,8 @@ public extension GlobalConfig { struct Bottom: Configurable { public init() {}
     private(set) var backgroundColour: Color = .white
     private(set) var cornerRadius: CGFloat = 32
 
-    private(set) var stackCornerRadiusMultiplier: CGFloat = 0.6
+    private(set) var stackCornerRadius: CGFloat = 32
+    private(set) var stackCornerRadiusMultiplier: CGFloat = 1.0
     private(set) var stackOffset: CGFloat = 8
     private(set) var stackScaleFactor: CGFloat = 0.1
     private(set) var stackLimit: Int = 4
