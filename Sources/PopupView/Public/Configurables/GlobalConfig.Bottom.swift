@@ -12,6 +12,9 @@ import SwiftUI
 
 // MARK: - Content Customisation
 public extension GlobalConfig.Bottom {
+    /// Colour of the overlay covering the view behind the popup
+    func overlayColour(_ value: Color) -> Self { changing(path: \.overlayColour, to: value) }
+    
     /// Distance between content and keyboard (if present)
     func distanceFromKeyboard(_ value: CGFloat) -> Self { changing(path: \.distanceFromKeyboard, to: value) }
 }
@@ -60,6 +63,8 @@ public extension GlobalConfig.Bottom {
 
 // MARK: - Internal
 public extension GlobalConfig { struct Bottom: Configurable { public init() {}
+    private(set) var overlayColour: Color = .clear
+    
     private(set) var distanceFromKeyboard: CGFloat = 8
 
     private(set) var backgroundColour: Color = .white

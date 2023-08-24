@@ -12,6 +12,9 @@ import SwiftUI
 
 // MARK: - Popup Customisation
 public extension GlobalConfig.Centre {
+    /// Colour of the overlay covering the view behind the popup
+    func overlayColour(_ value: Color) -> Self { changing(path: \.overlayColour, to: value) }
+    
     /// Background colour of the popup
     func backgroundColour(_ value: Color) -> Self { changing(path: \.backgroundColour, to: value) }
 
@@ -40,6 +43,8 @@ public extension GlobalConfig.Centre {
 
 // MARK: - Internal
 public extension GlobalConfig { struct Centre: Configurable { public init() {}
+    private(set) var overlayColour: Color = .clear
+    
     private(set) var backgroundColour: Color = .white
     private(set) var cornerRadius: CGFloat = 24
 

@@ -43,9 +43,24 @@ struct PopupView: View {
 // MARK: - Common Part
 private extension PopupView {
     func createBody() -> some View {
-        createPopupStackView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(createOverlay())
+        Group {
+            if #available(iOS 15.0, *) {
+                createPopupStackView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background {
+                        ZStack {
+                            createOverlay()
+                            createTopOverlay()
+                            createCentreOverlay()
+                            createBottomOverlay()
+                        }
+                    }
+            } else {
+                createPopupStackView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(createOverlay())
+            }
+        }
     }
 }
 
@@ -58,11 +73,33 @@ private extension PopupView {
         }
         .animation(stack.presenting ? globalConfig.common.animation.entry : globalConfig.common.animation.removal, value: stack.views.map(\.id))
     }
+    
     func createOverlay() -> some View {
         overlayColour
             .ignoresSafeArea()
             .active(if: !stack.views.isEmpty)
             .animation(overlayAnimation, value: stack.views.isEmpty)
+    }
+    
+    func createTopOverlay() -> some View {
+        overlayTopColour
+            .ignoresSafeArea()
+            .active(if: !stack.top.isEmpty)
+            .animation(overlayAnimation, value: stack.top.isEmpty)
+    }
+    
+    func createCentreOverlay() -> some View {
+        overlayCentreColour
+            .ignoresSafeArea()
+            .active(if: !stack.centre.isEmpty)
+            .animation(overlayAnimation, value: stack.centre.isEmpty)
+    }
+    
+    func createBottomOverlay() -> some View {
+        overlayBottomColour
+            .ignoresSafeArea()
+            .active(if: !stack.bottom.isEmpty)
+            .animation(overlayAnimation, value: stack.bottom.isEmpty)
     }
 }
 
@@ -80,5 +117,8 @@ private extension PopupView {
 
 private extension PopupView {
     var overlayColour: Color { globalConfig.common.overlayColour }
+    var overlayTopColour: Color { globalConfig.top.overlayColour }
+    var overlayCentreColour: Color { globalConfig.centre.overlayColour }
+    var overlayBottomColour: Color { globalConfig.bottom.overlayColour }
     var overlayAnimation: Animation { .easeInOut(duration: 0.44) }
 }
